@@ -3,6 +3,55 @@ const bugForm = document.getElementById("bugForm");
 const bugList = document.getElementById("bugList");
 const filterSeverity = document.getElementById("filterSeverity");
 const filterStatus = document.getElementById("filterStatus");
+const severitySuggestion = document.getElementById("severitySuggestion");
+const applySuggestionButton = document.getElementById("applySuggestion");
+const severitySelect = document.getElementById("severity");
+const descriptionInput = document.getElementById("description");
+
+function suggestSeverity() {
+    const description = descriptionInput.value.toLowerCase();
+    let suggested = "Low";
+
+    if (
+        description.includes("crash") ||
+        description.includes("security") ||
+        description.includes("data loss") ||
+        description.includes("breach")
+    ) {
+        suggested = "Critical";
+    } else if (
+        description.includes("not working") ||
+        description.includes("error") ||
+        description.includes("cannot login") ||
+        description.includes("failed")
+    ) {
+        suggested = "High";
+    } else if (
+        description.includes("slow") ||
+        description.includes("delay") ||
+        description.includes("incorrect")
+    ) {
+        suggested = "Medium";
+    }
+
+    severitySuggestion.textContent =
+        description.trim() === ""
+            ? ""
+            : "Suggested Severity: " + suggested;
+}
+
+descriptionInput.addEventListener("input", suggestSeverity);
+
+applySuggestionButton.addEventListener("click", function() {
+    const suggestion = severitySuggestion.textContent;
+
+    if (suggestion.startsWith("Suggested Severity: ")) {
+        const suggestedLevel = suggestion.replace("Suggested Severity: ", "");
+        severitySelect.value = suggestedLevel;
+    } else {
+        alert("Please enter a bug description first.");
+    }
+});
 
 let bugs = JSON.parse(localStorage.getItem("bugs")) || [];
 
