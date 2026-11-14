@@ -38,6 +38,23 @@
     </form>
 
     <h2>Submitted Bugs</h2>
+    <div class="filters">
+        <label for="filterSeverity">Filter by Severity:</label>
+        <select id="filterSeverity">
+            <option value="All">All</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <label for="filterStatus">Filter by Status:</label>
+        <select id="filterStatus">
+            <option value="All">All</option>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+        </select>
+    </div>
     <div id="bugList"></div>
 
     <script src="script.js"></script>

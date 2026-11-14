@@ -1,6 +1,8 @@
 
 const bugForm = document.getElementById("bugForm");
 const bugList = document.getElementById("bugList");
+const filterSeverity = document.getElementById("filterSeverity");
+const filterStatus = document.getElementById("filterStatus");
 
 let bugs = JSON.parse(localStorage.getItem("bugs")) || [];
 
@@ -33,7 +35,19 @@ bugForm.addEventListener("submit", function(event) {
 function displayBugs() {
     bugList.innerHTML = "";
 
-    bugs.forEach(function(bug) {
+    const selectedSeverity = filterSeverity.value;
+    const selectedStatus = filterStatus.value;
+
+    const filteredBugs = bugs.filter(function(bug) {
+        const matchesSeverity =
+            selectedSeverity === "All" || bug.severity === selectedSeverity;
+
+        const matchesStatus =
+            selectedStatus === "All" || bug.status === selectedStatus;
+
+        return matchesSeverity && matchesStatus;
+        });
+    filteredBugs.forEach(function(bug) {
         const bugCard = document.createElement("div");
         bugCard.style.backgroundColor = "white";
         bugCard.style.padding = "15px";
@@ -102,3 +116,5 @@ function displayBugs() {
 }
 
 displayBugs();
+filterSeverity.addEventListener("change", displayBugs);
+filterStatus.addEventListener("change", displayBugs);
