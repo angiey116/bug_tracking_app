@@ -109,8 +109,22 @@ function displayBugs() {
         const description = document.createElement("p");
         description.textContent = bug.description;
 
-        const severity = document.createElement("p");
-        severity.textContent = "Severity: " + bug.severity;
+        const severity = document.createElement("select");
+
+        ["Low", "Medium", "High", "Critical"].forEach(function(option) {
+            const choice = document.createElement("option");
+            choice.value = option;
+            choice.textContent = option;
+            severity.appendChild(choice);
+        });
+
+        severity.value = bug.severity;
+
+        severity.addEventListener("change", function() {
+            bug.severity = severity.value;
+            localStorage.setItem("bugs", JSON.stringify(bugs));
+            displayBugs();
+        });
 
         const status = document.createElement("select");
 
