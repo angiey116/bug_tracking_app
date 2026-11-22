@@ -9,6 +9,7 @@ const severitySelect = document.getElementById("severity");
 const descriptionInput = document.getElementById("description");
 
 function suggestSeverity() {
+    
     const description = descriptionInput.value.toLowerCase();
     let suggested = "Low";
 
